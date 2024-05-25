@@ -1,0 +1,17 @@
+server:
+  host-port: ":8080"
+  base-router: "/ez-todo"
+
+mysql:
+  path: "127.0.0.1"
+  port: "3306"
+  dbname: "ez_todo"
+  username: "root"
+  password: "123456"
+  config: "charset=utf8mb4&parseTime=True&loc=Local"
+  max-idle-conns: 10
+  max-open-conns: 100
+  engine: "InnoDB"
+  table-prefix: "todo_"
+  singular-table: true
+  log-mode: "info"
