@@ -1,7 +1,7 @@
 package service
 
-import "github.com/sevenzx/eztodo/service/user"
+import "github.com/sevenzx/eztodo/service/internal"
 
 var (
-	User user.Service
+	User internal.UserService
 )

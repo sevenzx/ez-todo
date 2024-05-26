@@ -1,6 +1,6 @@
 server:
   host-port: ":8080"
-  base-router: "/ez-todo"
+  base-router: "/ez-todo/api/v1"
 
 mysql:
   path: "127.0.0.1"
