@@ -7,7 +7,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/fsnotify/fsnotify"
 	"github.com/pkg/errors"
-	"github.com/sevenzx/eztodo/conf"
+	"github.com/sevenzx/eztodo/config"
 	"github.com/spf13/viper"
 )
 
@@ -47,12 +47,12 @@ func LoadConfigFile(paths ...string) {
 	v.WatchConfig()
 	v.OnConfigChange(func(e fsnotify.Event) {
 		hlog.Infof("viper: config file(%s) changed", e.Name)
-		if err = v.Unmarshal(&conf.Config); err != nil {
+		if err = v.Unmarshal(&config.Config); err != nil {
 			hlog.Errorf("%+v", errors.Wrap(err, "unmarshal config file error"))
 		}
 	})
-	// 将配置文件加载到conf.Config
-	if err = v.Unmarshal(&conf.Config); err != nil {
+	// 将配置文件加载到config.Config
+	if err = v.Unmarshal(&config.Config); err != nil {
 		panic(err)
 	}
 }

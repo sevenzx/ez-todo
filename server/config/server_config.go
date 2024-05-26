@@ -1,4 +1,4 @@
-package conf
+package config
 
 type Server struct {
 	HostPort   string `mapstructure:"host-port" json:"host-port" yaml:"host-port"`

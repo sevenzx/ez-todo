@@ -1,8 +1,6 @@
 package model
 
-import (
-	"github.com/gofrs/uuid/v5"
-)
+import "github.com/google/uuid"
 
 type User struct {
 	Model

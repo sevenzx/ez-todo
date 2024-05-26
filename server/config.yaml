@@ -15,3 +15,10 @@ mysql:
   table-prefix: "todo_"
   singular-table: true
   log-mode: "info"
+
+# lumberjack [配置详情](https://github.com/natefinch/lumberjack/tree/v2.0)
+lumberjack:
+  max-size: 20
+  backups: 5
+  max-age: 30
+  compress: true
