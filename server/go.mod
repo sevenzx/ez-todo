@@ -9,6 +9,7 @@ require (
 	github.com/gofrs/uuid/v5 v5.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.18.2
+	golang.org/x/crypto v0.16.0
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.10
 )
