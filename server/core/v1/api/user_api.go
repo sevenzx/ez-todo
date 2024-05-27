@@ -1,13 +1,14 @@
-package v1
+package api
 
 import (
 	"context"
 
-	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/sevenzx/eztodo/core/v1/service"
 	"github.com/sevenzx/eztodo/model"
 	"github.com/sevenzx/eztodo/model/response"
-	"github.com/sevenzx/eztodo/service"
+
+	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 type userApi struct{}
