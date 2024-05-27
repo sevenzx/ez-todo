@@ -3,7 +3,7 @@ package initialize
 import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/sevenzx/eztodo/config"
-	"github.com/sevenzx/eztodo/global"
+	"github.com/sevenzx/eztodo/core/global"
 	"github.com/sevenzx/eztodo/model"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"gorm.io/driver/mysql"
