@@ -20,9 +20,9 @@ func (api *userApi) Register(c context.Context, ctx *app.RequestContext) {
 	hlog.Info(err)
 	if err != nil {
 		hlog.Error(err)
-		response.Result(ctx, -1, nil, err.Error())
+		response.FailWithMsg(ctx, err.Error())
 	} else {
-		response.Result(ctx, 0, user, "success")
+		response.Ok(ctx)
 	}
 }
 
@@ -32,8 +32,8 @@ func (api *userApi) GetById(c context.Context, ctx *app.RequestContext) {
 	u, err := service.User.GetById(user.Id)
 	if err != nil {
 		hlog.Error(err)
-		response.Result(ctx, -1, nil, err.Error())
+		response.FailWithMsg(ctx, err.Error())
 	} else {
-		response.Result(ctx, 0, u, "success")
+		response.OkWithData(ctx, u)
 	}
 }
