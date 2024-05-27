@@ -1,4 +1,4 @@
-package internal
+package v1
 
 import (
 	"context"
@@ -10,9 +10,9 @@ import (
 	"github.com/sevenzx/eztodo/service"
 )
 
-type UserApi struct{}
+type userApi struct{}
 
-func (api UserApi) Register(c context.Context, ctx *app.RequestContext) {
+func (api *userApi) Register(c context.Context, ctx *app.RequestContext) {
 	var user model.User
 	_ = ctx.BindJSON(&user)
 	err := service.User.Register(&user)
@@ -25,7 +25,7 @@ func (api UserApi) Register(c context.Context, ctx *app.RequestContext) {
 	}
 }
 
-func (api UserApi) GetById(c context.Context, ctx *app.RequestContext) {
+func (api *userApi) GetById(c context.Context, ctx *app.RequestContext) {
 	var user model.User
 	_ = ctx.BindJSON(&user)
 	u, err := service.User.GetById(user.Id)
