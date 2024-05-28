@@ -2,6 +2,9 @@ package api
 
 import (
 	"context"
+	"fmt"
+	"github.com/sevenzx/eztodo/util"
+	"github.com/sevenzx/eztodo/util/jwt"
 
 	"github.com/sevenzx/eztodo/core/v1/service"
 	"github.com/sevenzx/eztodo/model"
@@ -36,4 +39,21 @@ func (api *userApi) GetById(c context.Context, ctx *app.RequestContext) {
 	} else {
 		response.OkWithData(ctx, u)
 	}
+}
+
+func (api *userApi) TestJWT(c context.Context, ctx *app.RequestContext) {
+	var user model.User
+	_ = ctx.BindJSON(&user)
+	u, _ := service.User.GetById(user.Id)
+	j := jwt.NewJWT()
+	claims := j.CreateClaims(model.CustomClaims{
+		UUID:     u.UUID,
+		Username: u.Username,
+		Nickname: u.Nickname,
+	})
+	token, _ := j.CreateToken(claims)
+	fmt.Println(token)
+	parseToken, _ := j.ParseToken(token)
+	fmt.Println(util.ToString(parseToken))
+	response.OkWithData(ctx, token)
 }

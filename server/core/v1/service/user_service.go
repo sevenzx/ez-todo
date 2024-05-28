@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"github.com/sevenzx/eztodo/core/global"
+	"github.com/sevenzx/eztodo/global"
 	"github.com/sevenzx/eztodo/model"
 	"github.com/sevenzx/eztodo/util"
 	"gorm.io/gorm"

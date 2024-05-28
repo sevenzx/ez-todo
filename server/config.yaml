@@ -16,6 +16,12 @@ mysql:
   singular-table: true
   log-mode: "info"
 
+jwt:
+  signing-key: ez-todo
+  expires-time: 7d
+  buffer-time: 1d
+  issuer: github.com/sevenzx
+
 # lumberjack [配置详情](https://github.com/natefinch/lumberjack/tree/v2.0)
 lumberjack:
   max-size: 20

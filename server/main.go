@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"github.com/sevenzx/eztodo/core/global"
+	"github.com/sevenzx/eztodo/global"
 	"github.com/sevenzx/eztodo/initialize"
 )
 

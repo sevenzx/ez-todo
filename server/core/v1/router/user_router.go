@@ -10,4 +10,5 @@ func registerUserRouter(r *route.RouterGroup) {
 
 	group.POST("/register", api.User.Register)
 	group.POST("/get", api.User.GetById)
+	group.POST("/test/jwt", api.User.TestJWT)
 }
