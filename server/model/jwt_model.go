@@ -11,6 +11,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
+// CustomClaims 用户的自定义信息
 type CustomClaims struct {
 	UUID     uuid.UUID `json:"uuid"`
 	Username string    `json:"username"`

@@ -3,12 +3,19 @@ package router
 import (
 	"github.com/cloudwego/hertz/pkg/route"
 	"github.com/sevenzx/eztodo/core/v1/api"
+	"github.com/sevenzx/eztodo/middleware"
 )
 
 func registerUserRouter(r *route.RouterGroup) {
-	group := r.Group("/user")
-
-	group.POST("/register", api.User.Register)
-	group.POST("/get", api.User.GetById)
-	group.POST("/test/jwt", api.User.TestJWT)
+	basicRouter := r.Group("/user")
+	userRouter := r.Group("/user")
+	userRouter.Use(middleware.JWTAuth())
+	{
+		// 注册登录不需要JWT验证
+		basicRouter.POST("/register", api.User.Register)
+		basicRouter.POST("/login", api.User.Login)
+	}
+	{
+		userRouter.POST("/get", api.User.GetById)
+	}
 }

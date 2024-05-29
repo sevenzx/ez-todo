@@ -11,6 +11,7 @@ import (
 
 type userService struct{}
 
+// Register 注册
 func (s *userService) Register(user *model.User) error {
 	if !errors.Is(global.DB.Where("username = ?", user.Username).First(&user).Error, gorm.ErrRecordNotFound) { // 判断用户名是否注册
 		return errors.New("user already registered")
@@ -26,6 +27,19 @@ func (s *userService) Register(user *model.User) error {
 	}
 }
 
+// Login 用户登录
+func (s *userService) Login(username string, password string) (*model.User, error) {
+	var user model.User
+	err := global.DB.Where("username = ?", username).First(&user).Error
+	if err == nil {
+		if ok := util.BcryptCheck(password, user.Password); !ok {
+			return nil, errors.New("invalid password")
+		}
+	}
+	return &user, nil
+}
+
+// GetById 通过id获取用户
 func (s *userService) GetById(id uint) (*model.User, error) {
 	var user model.User
 	err := global.DB.Where("id = ?", id).First(&user).Error
