@@ -39,9 +39,9 @@ func (s *userService) Login(username string, password string) (*model.User, erro
 	return &user, nil
 }
 
-// GetById 通过id获取用户
-func (s *userService) GetById(id uint) (*model.User, error) {
+// GetByUuid 通过uuid获取用户信息
+func (s *userService) GetByUuid(id uuid.UUID) (*model.User, error) {
 	var user model.User
-	err := global.DB.Where("id = ?", id).First(&user).Error
+	err := global.DB.Where("uuid = ?", id).First(&user).Error
 	return &user, err
 }

@@ -16,6 +16,6 @@ func registerUserRouter(r *route.RouterGroup) {
 		basicRouter.POST("/login", api.User.Login)
 	}
 	{
-		userRouter.POST("/get", api.User.GetById)
+		userRouter.GET("/info", api.User.Information)
 	}
 }

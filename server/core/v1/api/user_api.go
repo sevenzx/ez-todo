@@ -59,11 +59,10 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 	})
 }
 
-// GetById 通过id获取用户信息
-func (api *userApi) GetById(c context.Context, ctx *app.RequestContext) {
-	var user model.User
-	_ = ctx.BindJSON(&user)
-	u, err := service.User.GetById(user.Id)
+// Information 通过claims获取登录用户的信息
+func (api *userApi) Information(c context.Context, ctx *app.RequestContext) {
+	claims := jwtutil.GetClaims(ctx)
+	u, err := service.User.GetByUuid(claims.UUID)
 	if err != nil {
 		hlog.Error(err)
 		response.FailWithMsg(ctx, err.Error())

@@ -53,8 +53,27 @@ func ClearToken(ctx *app.RequestContext) {
 	}
 }
 
-// GetClaims 从token中获取claims
-func GetClaims(ctx *app.RequestContext) (*model.Claims, error) {
+// GetClaims 获取Claims
+func GetClaims(ctx *app.RequestContext) *model.Claims {
+	value, exists := ctx.Get(ClaimsKey)
+	if !exists {
+		claims, err := GetClaimsFormToken(ctx)
+		if err != nil {
+			return nil
+		} else {
+			return claims
+		}
+	}
+	claims, ok := value.(*model.Claims)
+	if !ok {
+		return nil
+	} else {
+		return claims
+	}
+}
+
+// GetClaimsFormToken 从token中获取claims
+func GetClaimsFormToken(ctx *app.RequestContext) (*model.Claims, error) {
 	token := GetToken(ctx)
 	j := NewJWT()
 	claims, err := j.ParseToken(token)
