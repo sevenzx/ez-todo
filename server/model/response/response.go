@@ -26,7 +26,7 @@ func Result(ctx *app.RequestContext, code int, data interface{}, msg string) {
 }
 
 func Ok(ctx *app.RequestContext) {
-	OkWithData(ctx, nil)
+	OkWithData(ctx, true)
 }
 
 func OkWithData(ctx *app.RequestContext, data interface{}) {

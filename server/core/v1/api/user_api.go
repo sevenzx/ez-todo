@@ -40,6 +40,7 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 	// 登录成功 签发jwt
 	j := jwtutil.NewJWT()
 	claims := j.CreateClaims(model.CustomClaims{
+		Id:       user.Id,
 		UUID:     user.UUID,
 		Username: user.Username,
 		Nickname: user.Nickname,
@@ -59,7 +60,7 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 	})
 }
 
-// Information 通过claims获取登录用户的信息
+// Information 通过ctx获取登录用户的信息
 func (api *userApi) Information(c context.Context, ctx *app.RequestContext) {
 	claims := jwtutil.GetClaims(ctx)
 	u, err := service.User.GetByUuid(claims.UUID)
