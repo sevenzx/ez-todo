@@ -13,6 +13,6 @@ func AccessLog() app.HandlerFunc {
 	}
 	return accesslog.New(
 		// 自定义日志格式
-		accesslog.WithFormat("[${requestId}] ${status} ${method} ${path} ${latency}\n${body}\n${resBody}"),
+		accesslog.WithFormat("[${requestId}] ${status} ${method} ${path} ${latency}"),
 	)
 }
