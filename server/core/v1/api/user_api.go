@@ -58,6 +58,12 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 	})
 }
 
+// Logout 退出登录
+func (api *userApi) Logout(c context.Context, ctx *app.RequestContext) {
+	service.User.Logout(ctx)
+	response.Ok(ctx)
+}
+
 // Information 通过ctx获取登录用户的信息
 func (api *userApi) Information(c context.Context, ctx *app.RequestContext) {
 	claims := jwt.GetClaims(ctx)

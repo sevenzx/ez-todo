@@ -1,10 +1,12 @@
 package service
 
 import (
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
 	"github.com/sevenzx/eztodo/global"
 	"github.com/sevenzx/eztodo/model"
+	"github.com/sevenzx/eztodo/util/jwt"
 	"github.com/sevenzx/eztodo/util/pwd"
 	"gorm.io/gorm"
 )
@@ -40,6 +42,11 @@ func (s *userService) Login(username string, password string) (*model.User, erro
 	} else {
 		return nil, errors.New("no such username")
 	}
+}
+
+// Logout 退出登录
+func (s *userService) Logout(ctx *app.RequestContext) {
+	jwt.ClearToken(ctx)
 }
 
 // GetUserByUuid 通过uuid获取用户信息

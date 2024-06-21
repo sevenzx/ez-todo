@@ -17,5 +17,6 @@ func registerUserRouter(r *route.RouterGroup) {
 	}
 	{
 		userRouter.GET("/info", api.User.Information)
+		userRouter.GET("/logout", api.User.Logout)
 	}
 }
