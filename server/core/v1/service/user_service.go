@@ -5,7 +5,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sevenzx/eztodo/global"
 	"github.com/sevenzx/eztodo/model"
-	"github.com/sevenzx/eztodo/util"
+	"github.com/sevenzx/eztodo/util/pwd"
 	"gorm.io/gorm"
 )
 
@@ -18,7 +18,7 @@ func (s *userService) Register(user *model.User) error {
 	}
 	// 没有找到记录所以可以创建
 	user.UUID, _ = uuid.NewRandom()
-	user.Password = util.BcryptHash(user.Password)
+	user.Password = pwd.Generate(user.Password)
 	err := global.DB.Create(&user).Error
 	if err != nil {
 		return errors.Wrap(err, "create user")
@@ -32,7 +32,7 @@ func (s *userService) Login(username string, password string) (*model.User, erro
 	var user model.User
 	err := global.DB.Where("username = ?", username).First(&user).Error
 	if err == nil {
-		if ok := util.BcryptCheck(password, user.Password); !ok {
+		if ok := pwd.Check(password, user.Password); !ok {
 			return nil, errors.New("incorrect password")
 		} else {
 			return &user, nil

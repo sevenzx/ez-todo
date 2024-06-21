@@ -3,10 +3,9 @@ package response
 import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"github.com/sevenzx/eztodo/model/response/exception"
-)
 
-const RequestIdHeaderKey = "X-Request-ID"
+	cts "github.com/sevenzx/eztodo/common/consts"
+)
 
 type Response struct {
 	Code      int         `json:"code"`
@@ -16,7 +15,7 @@ type Response struct {
 }
 
 func Result(ctx *app.RequestContext, code int, data interface{}, msg string) {
-	requestId := ctx.Response.Header.Get(RequestIdHeaderKey)
+	requestId := ctx.Response.Header.Get(cts.RequestIdHeaderKey)
 	ctx.JSON(consts.StatusOK, Response{
 		Code:      code,
 		Data:      data,
@@ -30,27 +29,27 @@ func Ok(ctx *app.RequestContext) {
 }
 
 func OkWithData(ctx *app.RequestContext, data interface{}) {
-	Result(ctx, exception.Success.Code, data, exception.Success.Message)
+	Result(ctx, Success.Code, data, Success.Message)
 }
 
 func Fail(ctx *app.RequestContext) {
-	FailWithException(ctx, exception.Operate)
+	FailWithError(ctx, ErrOperate)
 }
 
-func FailWithException(ctx *app.RequestContext, ex exception.Exception) {
-	Result(ctx, ex.Code, nil, ex.Message)
+func FailWithError(ctx *app.RequestContext, err Error) {
+	Result(ctx, err.Code, nil, err.Message)
 }
 
 func FailWithMsg(ctx *app.RequestContext, msg string) {
-	Result(ctx, exception.Operate.Code, nil, msg)
+	Result(ctx, ErrOperate.Code, nil, msg)
 }
 
 func UnAuth(ctx *app.RequestContext) {
-	requestId := ctx.Response.Header.Get(RequestIdHeaderKey)
+	requestId := ctx.Response.Header.Get(cts.RequestIdHeaderKey)
 	ctx.JSON(consts.StatusUnauthorized, Response{
-		Code:      exception.UnAuth.Code,
+		Code:      ErrUnAuth.Code,
 		Data:      nil,
-		Msg:       exception.UnAuth.Message,
+		Msg:       ErrUnAuth.Message,
 		RequestId: requestId,
 	})
 }

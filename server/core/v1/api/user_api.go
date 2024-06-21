@@ -2,15 +2,14 @@ package api
 
 import (
 	"context"
+	"github.com/sevenzx/eztodo/util/jwt"
 	"time"
-
-	"github.com/sevenzx/eztodo/core/v1/service"
-	"github.com/sevenzx/eztodo/model"
-	"github.com/sevenzx/eztodo/model/response"
-	jwtutil "github.com/sevenzx/eztodo/util/jwt"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/sevenzx/eztodo/core/v1/service"
+	"github.com/sevenzx/eztodo/model"
+	"github.com/sevenzx/eztodo/model/response"
 )
 
 type userApi struct{}
@@ -38,7 +37,7 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 		return
 	}
 	// 登录成功 签发jwt
-	j := jwtutil.NewJWT()
+	j := jwt.NewHelper()
 	claims := j.CreateClaims(model.CustomClaims{
 		UUID:     user.UUID,
 		Username: user.Username,
@@ -51,7 +50,7 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 		return
 	}
 	// 向客户端设置token
-	jwtutil.SetToken(ctx, token, int(claims.ExpiresAt.Unix()-time.Now().Unix()))
+	jwt.SetToken(ctx, token, int(claims.ExpiresAt.Unix()-time.Now().Unix()))
 	response.OkWithData(ctx, map[string]interface{}{
 		"user":       user,
 		"token":      token,
@@ -61,7 +60,7 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 
 // Information 通过ctx获取登录用户的信息
 func (api *userApi) Information(c context.Context, ctx *app.RequestContext) {
-	claims := jwtutil.GetClaims(ctx)
+	claims := jwt.GetClaims(ctx)
 	u, err := service.User.GetUserByUuid(claims.UUID)
 	if err != nil {
 		hlog.Error(err)

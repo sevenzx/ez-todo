@@ -9,18 +9,18 @@ import (
 	"time"
 )
 
-type JWT struct {
+type Helper struct {
 	SigningKey []byte
 }
 
-func NewJWT() *JWT {
-	return &JWT{
+func NewHelper() *Helper {
+	return &Helper{
 		SigningKey: []byte(config.Config.JWT.SigningKey),
 	}
 }
 
 // CreateClaims 创建一个Claims
-func (j *JWT) CreateClaims(customClaims model.CustomClaims) model.Claims {
+func (h *Helper) CreateClaims(customClaims model.CustomClaims) model.Claims {
 	bf, _ := util.ParseDuration(config.Config.JWT.BufferTime)
 	ep, _ := util.ParseDuration(config.Config.JWT.ExpiresTime)
 	claims := model.Claims{
@@ -41,24 +41,24 @@ func (j *JWT) CreateClaims(customClaims model.CustomClaims) model.Claims {
 }
 
 // CreateToken 创建一个token
-func (j *JWT) CreateToken(claims model.Claims) (string, error) {
+func (h *Helper) CreateToken(claims model.Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(j.SigningKey)
+	return token.SignedString(h.SigningKey)
 }
 
 // RefreshToken 使用之前的token来刷新token
-func (j *JWT) RefreshToken(oldToken string, claims model.Claims) (string, error) {
+func (h *Helper) RefreshToken(oldToken string, claims model.Claims) (string, error) {
 	// 避免并发问题
-	v, err, _ := global.Once.Do("JWT:"+oldToken, func() (interface{}, error) {
-		return j.CreateToken(claims)
+	v, err, _ := global.Once.Do("JwtHelper:"+oldToken, func() (interface{}, error) {
+		return h.CreateToken(claims)
 	})
 	return v.(string), err
 }
 
 // ParseToken 解析token
-func (j *JWT) ParseToken(t string) (*model.Claims, error) {
+func (h *Helper) ParseToken(t string) (*model.Claims, error) {
 	token, err := jwt.ParseWithClaims(t, &model.Claims{}, func(token *jwt.Token) (i interface{}, e error) {
-		return j.SigningKey, nil
+		return h.SigningKey, nil
 	})
 	if err != nil {
 		return nil, err

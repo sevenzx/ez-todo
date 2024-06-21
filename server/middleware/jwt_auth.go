@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"github.com/sevenzx/eztodo/common/consts"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/golang-jwt/jwt/v5"
@@ -25,7 +26,7 @@ func JWTAuth() app.HandlerFunc {
 			return
 		}
 		// 2. 验证token
-		j := jwtutil.NewJWT()
+		j := jwtutil.NewHelper()
 		claims, err := j.ParseToken(token)
 		if err != nil {
 			// 如果token过期就清除客户端的token
@@ -37,7 +38,7 @@ func JWTAuth() app.HandlerFunc {
 			return
 		}
 		// 3. 在上下文中设置claims供后续使用
-		ctx.Set(jwtutil.ClaimsKey, claims)
+		ctx.Set(consts.JwtClaimsKey, claims)
 		// 4. 判断是否需要刷新
 		if claims.ExpiresAt.Unix()-time.Now().Unix() < claims.BufferTime {
 			duration, _ := util.ParseDuration(config.Config.JWT.ExpiresTime)

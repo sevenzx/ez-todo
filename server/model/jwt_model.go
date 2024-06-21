@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Claims 声明
 type Claims struct {
 	CustomClaims
 	BufferTime int64 `json:"buffer_time"`
