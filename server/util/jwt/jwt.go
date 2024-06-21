@@ -31,7 +31,7 @@ func (j *JWT) CreateClaims(customClaims model.CustomClaims) model.Claims {
 		// 此时一个用户会存在两个有效令牌 但是前端只留一个(前端需要处理) 另一个会丢失
 		BufferTime: int64(bf / time.Second),
 		RegisteredClaims: jwt.RegisteredClaims{
-			Audience:  jwt.ClaimStrings{"ez-todo"},               // 受众
+			Audience:  jwt.ClaimStrings{customClaims.Username},   // 受众
 			NotBefore: jwt.NewNumericDate(time.Now().Add(-1000)), // 签名生效时间
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(ep)),    // 过期时间
 			Issuer:    config.Config.JWT.Issuer,                  // 签名的发行者

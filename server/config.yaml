@@ -11,16 +11,16 @@ mysql:
   config: "charset=utf8mb4&parseTime=True&loc=Local"
   max-idle-conns: 10
   max-open-conns: 100
-  engine: "InnoDB"
   table-prefix: "todo_"
   singular-table: true
   log-mode: "info"
+  engine: "InnoDB"
 
 jwt:
-  signing-key: ez-todo
-  expires-time: 7d
-  buffer-time: 1d
-  issuer: github.com/sevenzx
+  signing-key: "B697F829E18748FCBD6067BB29054FAB"
+  expires-time: "7d"
+  buffer-time: "1d"
+  issuer: "seven@example.com"
 
 # lumberjack [配置详情](https://github.com/natefinch/lumberjack/tree/v2.0)
 lumberjack:

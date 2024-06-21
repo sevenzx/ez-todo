@@ -13,7 +13,6 @@ type Claims struct {
 
 // CustomClaims 用户的自定义信息
 type CustomClaims struct {
-	Id       uint      `json:"id"`
 	UUID     uuid.UUID `json:"uuid"`
 	Username string    `json:"username"`
 	Nickname string    `json:"nickname"`

@@ -40,7 +40,6 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 	// 登录成功 签发jwt
 	j := jwtutil.NewJWT()
 	claims := j.CreateClaims(model.CustomClaims{
-		Id:       user.Id,
 		UUID:     user.UUID,
 		Username: user.Username,
 		Nickname: user.Nickname,
