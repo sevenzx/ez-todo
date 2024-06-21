@@ -33,14 +33,17 @@ func (s *userService) Login(username string, password string) (*model.User, erro
 	err := global.DB.Where("username = ?", username).First(&user).Error
 	if err == nil {
 		if ok := util.BcryptCheck(password, user.Password); !ok {
-			return nil, errors.New("invalid password")
+			return nil, errors.New("incorrect password")
+		} else {
+			return &user, nil
 		}
+	} else {
+		return nil, errors.New("no such username")
 	}
-	return &user, nil
 }
 
-// GetByUuid 通过uuid获取用户信息
-func (s *userService) GetByUuid(id uuid.UUID) (*model.User, error) {
+// GetUserByUuid 通过uuid获取用户信息
+func (s *userService) GetUserByUuid(id uuid.UUID) (*model.User, error) {
 	var user model.User
 	err := global.DB.Where("uuid = ?", id).First(&user).Error
 	return &user, err

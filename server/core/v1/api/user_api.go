@@ -62,7 +62,7 @@ func (api *userApi) Login(c context.Context, ctx *app.RequestContext) {
 // Information 通过ctx获取登录用户的信息
 func (api *userApi) Information(c context.Context, ctx *app.RequestContext) {
 	claims := jwtutil.GetClaims(ctx)
-	u, err := service.User.GetByUuid(claims.UUID)
+	u, err := service.User.GetUserByUuid(claims.UUID)
 	if err != nil {
 		hlog.Error(err)
 		response.FailWithMsg(ctx, err.Error())
