@@ -49,7 +49,7 @@ func (h *Helper) CreateToken(claims model.Claims) (string, error) {
 // RefreshToken 使用之前的token来刷新token
 func (h *Helper) RefreshToken(oldToken string, claims model.Claims) (string, error) {
 	// 避免并发问题
-	v, err, _ := global.Once.Do("JwtHelper:"+oldToken, func() (interface{}, error) {
+	v, err, _ := global.Once.Do("JWT:"+oldToken, func() (interface{}, error) {
 		return h.CreateToken(claims)
 	})
 	return v.(string), err
